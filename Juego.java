@@ -57,9 +57,9 @@ public class Juego {
         }
 
         if (ejercito1Vacio()) {
-            System.out.println("¡Ganó el Ejército 2!");
+            System.out.println("Ganó el Ejército 2");
         } else {
-            System.out.println("¡Ganó el Ejército 1!");
+            System.out.println("Ganó el Ejército 1");
         }
     }
 
@@ -72,7 +72,7 @@ public class Juego {
             System.out.print("Ingrese columna del soldado a mover: ");
             int col = sc.nextInt();
 
-            Soldado s = tablero.obtenerSoldado(fila+1, col+1);
+            Soldado s = tablero.obtenerSoldado(fila, col);
             if (s != null && s.getEjercito() == ejercito.getNumero() && s.estaVivo()) {
                 return s;
             } else {

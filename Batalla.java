@@ -11,7 +11,6 @@ public class Batalla {
         int filaDestino = pos[0];
         int colDestino = pos[1];
 
-        // Calcular destino según dirección
         switch (direccion.toLowerCase()) {
             case "e": colDestino++; break;   
             case "o": colDestino--; break;  
@@ -43,14 +42,15 @@ public class Batalla {
         return true;
     }
 
-    private void resolverBatalla(Soldado atacante, Soldado defensor) {
-        if (atacante.getVidaActual() >= defensor.getVidaActual()) {
-            System.out.println("El soldado atacante gana la batalla.");
-            defensor.morir();
-            batalla.moverSoldado(atacante.getFila(), atacante.getColumna(), defensor.getFila(), defensor.getColumna());
+    private void resolverBatalla(Soldado E1, Soldado E2) {
+        if (E1.getVidaActual() >= E2.getVidaActual()) {
+            System.out.println("El soldado E" + E1.getEjercito() + " gana la batalla.");
+            E2.morir();
+            batalla.moverSoldado(E1.getFila(), E1.getColumna(), E2.getFila(), E2.getColumna());
         } else {
-            System.out.println("El soldado defensor gana la batalla.");
-            atacante.morir();
+            System.out.println("El soldado E" + E2.getEjercito() + " gana la batalla.");
+            E1.morir();
         }
     }
+
 }
