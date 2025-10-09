@@ -35,8 +35,10 @@ public class Videojuego {
 
         e1.comparar(e2);
 
+        System.out.println();
+        
         System.out.println("JUEGO");
         Juego juego = new Juego();
-        juego.iniciar(); 
+        juego.iniciarJuego(); 
     }
 }

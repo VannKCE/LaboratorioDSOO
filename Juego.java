@@ -20,7 +20,7 @@ public class Juego {
         sc = new Scanner(System.in);
     }
 
-    public void iniciar() {
+    public void iniciarJuego() {
         boolean turnoEjercito1 = true; 
 
         while (!ejercito1Vacio() && !ejercito2Vacio()) {
@@ -45,8 +45,8 @@ public class Juego {
             boolean movido = false;
             while (!movido) {
                 System.out.print("Ingrese dirección (e/o/n/s/w/x/y/z): ");
-                String dir = sc.next();
-                movido = batalla.moverSoldado(soldado, dir);
+                String direccion = sc.next();
+                movido = batalla.moverSoldado(soldado, direccion);
             }
 
             if (turnoEjercito1) {
