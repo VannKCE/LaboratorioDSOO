@@ -68,9 +68,11 @@ public class Juego {
         while (true) {
             System.out.print("Ingrese fila del soldado a mover: ");
             int fila = sc.nextInt();
+            fila = fila-1;
 
             System.out.print("Ingrese columna del soldado a mover: ");
             int col = sc.nextInt();
+            col=col-1;
 
             Soldado s = tablero.obtenerSoldado(fila, col);
             if (s != null && s.getEjercito() == ejercito.getNumero() && s.estaVivo()) {
@@ -83,7 +85,8 @@ public class Juego {
 
     private boolean ejercito1Vacio() {
         for (Soldado s : ejercito1.getSoldados()) {
-            if (s.estaVivo()) return false;
+            if (s.estaVivo()) 
+            return false;
         }
         return true;
     }

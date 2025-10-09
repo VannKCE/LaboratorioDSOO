@@ -34,7 +34,21 @@ public class Tablero {
     }
 
     public void mostrarTablero() {
+         System.out.print("   "); 
+        for (int j = 0; j < columnas; j++) {
+            if (j + 1 < 10)
+                System.out.print(" " + "0" + (j + 1) + " ");
+            else
+                System.out.print(" "+(j + 1) + " ");
+        }
+        System.out.println();
+
         for (int i = 0; i < filas; i++) {
+            if (i+1<10) {
+                System.out.print("0" + (i+1) + " ");
+            } else {
+                System.out.print(i+1 + " ");
+            }
             for (int j = 0; j < columnas; j++) {
                 Soldado s = tablero.get(i).get(j);
                 if (s == null) {

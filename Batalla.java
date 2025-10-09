@@ -44,7 +44,7 @@ public class Batalla {
 
     private void resolverBatalla(Soldado E1, Soldado E2) {
         if (E1.getVidaActual() >= E2.getVidaActual()) {
-            System.out.println("El soldado E" + E1.getEjercito() + " gana la batalla.");
+            System.out.println("El soldado E" + E1.getEjercito() + E1.getPosicion() +" gana la batalla.");
             E2.morir();
             batalla.moverSoldado(E1.getFila(), E1.getColumna(), E2.getFila(), E2.getColumna());
         } else {
