@@ -104,7 +104,7 @@ public class Tablero {
 
     public Soldado obtenerSoldado(int fila, int columna, int ejercito) {
         Soldado s = tablero.get(fila).get(columna);
-        if (s != null && s.getEjercito() == ejercito) {
+        if (s != null && s.getEjercito() != ejercito) {
             return s;
         }
         return null;

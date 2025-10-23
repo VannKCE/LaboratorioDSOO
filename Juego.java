@@ -46,8 +46,9 @@ public class Juego {
             while (!movido) {
                 System.out.print("Ingrese dirección (e/o/n/s/w/x/y/z): ");
                 String direccion = sc.next();
-                movido = batalla.moverSoldado(soldado, direccion);
+                movido = batalla.moverSoldado(soldado, direccion);  
             }
+
 
             if (turnoEjercito1) {
                 turnoEjercito1 = false;
