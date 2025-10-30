@@ -40,5 +40,8 @@ public class Videojuego {
         System.out.println("JUEGO");
         Juego juego = new Juego();
         juego.iniciarJuego(); 
+
+        System.out.println("TABLERO TIPOS SOLDADOS");
+        t.mostrarTablero();
     }
 }

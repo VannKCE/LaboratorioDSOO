@@ -34,36 +34,36 @@ public class Tablero {
     }
 
     public void mostrarTablero() {
-         System.out.print("   "); 
+        System.out.print("   "); 
         for (int j = 0; j < columnas; j++) {
             if (j + 1 < 10)
-                System.out.print(" " + "0" + (j + 1) + " ");
+                System.out.print(" 0" + (j + 1) + " ");
             else
-                System.out.print(" "+(j + 1) + " ");
+                System.out.print(" " + (j + 1) + " ");
         }
         System.out.println();
 
         for (int i = 0; i < filas; i++) {
-            if (i+1<10) {
-                System.out.print("0" + (i+1) + " ");
+            if (i + 1 < 10) {
+                System.out.print("0" + (i + 1) + " ");
             } else {
-                System.out.print(i+1 + " ");
+                System.out.print(i + 1 + " ");
             }
+
             for (int j = 0; j < columnas; j++) {
                 Soldado s = tablero.get(i).get(j);
                 if (s == null) {
                     System.out.print("[  ]");
                 } else {
-                    if (s.getEjercito() == 1)
-                        System.out.print("[E1]");
-                    else
-                        System.out.print("[E2]");
+                    char inicial = s.getNombre().charAt(0); 
+                    System.out.print("[" + inicial + s.getEjercito() + "]");
                 }
             }
             System.out.println();
         }
         System.out.println();
     }
+
 
     public ArrayList<ArrayList<Soldado>> getTablero() {
         return tablero;

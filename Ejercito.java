@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Ejercito {
-    private ArrayList<Soldado> soldados;
+    private ArrayList<Soldado> soldados; 
     private int numero; 
     private Random rand = new Random();
 
@@ -13,7 +13,7 @@ public class Ejercito {
 
     public void generarSoldados(Tablero t) {
         int filas = 10, columnas = 10;
-        int cantidad = rand.nextInt(10) + 1;
+        int cantidad = rand.nextInt(10) + 1; 
 
         for (int i = 0; i < cantidad; i++) {
             int fila, columna;
@@ -23,9 +23,26 @@ public class Ejercito {
                 columna = rand.nextInt(columnas);
             } while (t.obtenerSoldado(fila, columna) != null);
 
-            int puntosVida = rand.nextInt(5) + 1;
-            
-            Soldado s = new Soldado(puntosVida, fila, columna, numero);
+            int tipo = rand.nextInt(4);
+            Soldado s;
+
+            switch (tipo) {
+                case 0:
+                    s = new Espadachines("Espadachin" + i + "X" + numero,
+                            rand.nextInt(2) + 3, fila, columna, numero, rand.nextInt(2) + 1);
+                    break;
+                case 1:
+                    s = new Arquero("Arquero" + i + "X" + numero,
+                            rand.nextInt(3) + 1, fila, columna, numero, rand.nextInt(5) + 5);
+                    break;
+                case 2:
+                    s = new Caballeros("Caballero" + i + "X" + numero, rand.nextInt(3) + 3, fila, columna, numero, true);
+                    break;
+                default:
+                    s = new Lancero("Lancero" + i + "X" + numero, rand.nextInt(2) + 1, fila, columna, numero, rand.nextInt(3) + 2);
+                    break;
+            }
+
             soldados.add(s);
             t.colocarSoldado(s, fila, columna);
         }
@@ -35,7 +52,7 @@ public class Ejercito {
         System.out.println("EJÉRCITO " + numero);
         for (Soldado s : soldados) {
             System.out.println(s);
-        }     
+        }
         System.out.println();
     }
 
@@ -58,40 +75,41 @@ public class Ejercito {
     }
 
     public void ordenarPorBurbuja() {
-        ArrayList<Soldado> Soldadosc = new ArrayList<>(soldados);
-        for (int i = 0; i < Soldadosc.size() - 1; i++) {
-            for (int j = 0; j < Soldadosc.size() - i - 1; j++) {
-                if (Soldadosc.get(j).getPuntosVida() < Soldadosc.get(j + 1).getPuntosVida()) {
-                    Soldado temp = Soldadosc.get(j);
-                    Soldadosc.set(j, Soldadosc.get(j + 1));
-                    Soldadosc.set(j + 1, temp);
+        ArrayList<Soldado> copia = new ArrayList<>(soldados);
+        for (int i = 0; i < copia.size() - 1; i++) {
+            for (int j = 0; j < copia.size() - i - 1; j++) {
+                if (copia.get(j).getPuntosVida() < copia.get(j + 1).getPuntosVida()) {
+                    Soldado temp = copia.get(j);
+                    copia.set(j, copia.get(j + 1));
+                    copia.set(j + 1, temp);
                 }
             }
         }
         System.out.println("EJÉRCITO " + numero);
-        for (Soldado s : Soldadosc) {
+        for (Soldado s : copia) {
             System.out.println(s);
         }
+        System.out.println();
     }
 
     public void ordenarPorSeleccion() {
-        ArrayList<Soldado> Soldadosc = new ArrayList<>(soldados);
-        for (int i = 0; i < Soldadosc.size() - 1; i++) {
+        ArrayList<Soldado> copia = new ArrayList<>(soldados);
+        for (int i = 0; i < copia.size() - 1; i++) {
             int indiceMayor = i;
-            for (int j = i + 1; j < Soldadosc.size(); j++) {
-                if (Soldadosc.get(j).getPuntosVida() > Soldadosc.get(indiceMayor).getPuntosVida()) {
+            for (int j = i + 1; j < copia.size(); j++) {
+                if (copia.get(j).getPuntosVida() > copia.get(indiceMayor).getPuntosVida()) {
                     indiceMayor = j;
                 }
             }
-            Soldado temp = Soldadosc.get(i);
-            Soldadosc.set(i, Soldadosc.get(indiceMayor));
-            Soldadosc.set(indiceMayor, temp);
+            Soldado temp = copia.get(i);
+            copia.set(i, copia.get(indiceMayor));
+            copia.set(indiceMayor, temp);
         }
-
-        System.out.println("EJERCITO " + numero);
-        for (Soldado s : Soldadosc) {
+        System.out.println("EJÉRCITO " + numero );
+        for (Soldado s : copia) {
             System.out.println(s);
         }
+        System.out.println();
     }
 
     public int puntosTotales() {
@@ -104,17 +122,21 @@ public class Ejercito {
 
     public void comparar(Ejercito otro) {
         int total1 = this.puntosTotales();
-        int total2 = otro.puntosTotales(); 
+        int total2 = otro.puntosTotales();
+
+        System.out.println("Comparando Ejércitos...");
+        System.out.println("Ejército 1 total vida: " + total1);
+        System.out.println("Ejército 2 total vida: " + total2);
 
         if (total1 > total2) {
-            System.out.println("GANADOR: Ejercito 1");
+            System.out.println("GANADOR: Ejército 1");
         } else if (total1 < total2) {
-            System.out.println("GANADOR: Ejercito 2");
+            System.out.println("GANADOR: Ejército 2");
         } else {
             System.out.println("Empate");
         }
-
-        System.out.println("MÉTRICA: Mayor puntos de vida.");
+        System.out.println("MÉTRICA: Mayor suma de puntos de vida.");
+        System.out.println();
     }
 
     public ArrayList<Soldado> getSoldados() {
@@ -124,5 +146,4 @@ public class Ejercito {
     public int getNumero() {
         return numero;
     }
-
 }

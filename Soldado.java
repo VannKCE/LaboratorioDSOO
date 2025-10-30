@@ -34,6 +34,14 @@ public class Soldado {
         contador1++;
     }
 
+    public Soldado(String nombre, int puntosVida, int fila, int columna, int ejercito) {
+        this.nombre = nombre;
+        this.puntosVida = puntosVida;
+        this.fila = fila;
+        this.columna = columna;
+        this.ejercito = ejercito;
+    }
+    
     public Soldado(int puntosVida, int fila, int columna, int ejercito) {
         this.puntosVida = puntosVida;
         this.fila = fila;
@@ -74,6 +82,9 @@ public class Soldado {
     public String getNombre() { 
         return nombre; 
     }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     public int getPuntosVida() { 
         return puntosVida; 
     }
@@ -89,11 +100,6 @@ public class Soldado {
 
     public void setPuntosVida(int puntosVida){
         this.puntosVida= puntosVida;
-    }
-
-    @Override
-    public String toString() {
-        return nombre + "|Puntos de vida: " + puntosVida + "|Fila: " +fila+"|Columna: " +columna+ "|Ejercito: " + ejercito;
     }
 
     //LAB  04 - MÉTODOS//
@@ -172,4 +178,12 @@ public class Soldado {
         this.columna = columna;
     }
     
+    public int getNivelDefensa() {
+        return nivelDefensa;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + " | PV: " + puntosVida + " | Vida actual: " + vidaActual + " | Posición: (" + (fila + 1) + "," + (columna + 1) + ")" + " | Ejército: " + ejercito + " | Actitud: " + actitud;
+    }
 }
