@@ -1,9 +1,10 @@
+import java.util.*;
 public class Caballeros extends Soldado {
     private boolean montando;
     private String arma; // "espada" o "lanza"
 
-    public Caballeros(String nombre, int puntosVida, int fila, int columna, int ejercito, boolean montando) {
-        super(nombre, puntosVida, fila, columna, ejercito);
+    public Caballeros(String nombre, int fila, int columna, int ejercito) {
+        super(nombre, fila, columna, ejercito, 13, 7, new Random().nextInt(3) + 10);
         this.montando = montando;
         this.arma = montando ? "lanza" : "espada";
     }

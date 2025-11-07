@@ -1,9 +1,11 @@
+import java.util.Random;
+
 public class Arquero extends Soldado {
     private int flechas;
 
-    public Arquero(String nombre, int puntosVida, int fila, int columna, int ejercito, int flechas) {
-        super(nombre, puntosVida, fila, columna, ejercito);
-        this.flechas = flechas;
+    public Arquero(String nombre, int fila, int columna, int ejercito) {
+        super(nombre, fila, columna, ejercito, 7, 3, new Random().nextInt(3) + 3);
+        this.flechas = new Random().nextInt(5) + 1;
     }
 
     public void dispararFlecha() {

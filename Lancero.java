@@ -1,9 +1,11 @@
+import java.util.*
+;
 public class Lancero extends Soldado {
     private int longitudLanza;
 
-    public Lancero(String nombre, int puntosVida, int fila, int columna, int ejercito, int longitudLanza) {
-        super(nombre, puntosVida, fila, columna, ejercito);
-        this.longitudLanza = longitudLanza;
+    public Lancero(String nombre, int fila, int columna, int ejercito) {
+        super(nombre, fila, columna, ejercito, 5, 10, new Random().nextInt(4) + 5);
+        this.longitudLanza = new Random().nextInt(3) + 1;
     }
 
     public void schiltrom() {

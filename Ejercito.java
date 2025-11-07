@@ -4,6 +4,8 @@ import java.util.Random;
 public class Ejercito {
     private ArrayList<Soldado> soldados; 
     private int numero; 
+    //LAB 09
+    private String reino;
     private Random rand = new Random();
 
     public Ejercito(int numero) {
@@ -11,9 +13,16 @@ public class Ejercito {
         soldados = new ArrayList<>();
     }
 
+
+    public Ejercito(int numero, String reino) {
+        this.numero = numero;
+        this.reino = reino;
+        soldados = new ArrayList<>();
+    }
+
     public void generarSoldados(Tablero t) {
         int filas = 10, columnas = 10;
-        int cantidad = rand.nextInt(10) + 1; 
+        int cantidad = rand.nextInt(10) + 1;
 
         for (int i = 0; i < cantidad; i++) {
             int fila, columna;
@@ -23,23 +32,21 @@ public class Ejercito {
                 columna = rand.nextInt(columnas);
             } while (t.obtenerSoldado(fila, columna) != null);
 
-            int tipo = rand.nextInt(4);
+            int tipo = rand.nextInt(4); // 0=Espadachín, 1=Arquero, 2=Caballero, 3=Lancero
             Soldado s;
 
             switch (tipo) {
                 case 0:
-                    s = new Espadachines("Espadachin" + i + "X" + numero,
-                            rand.nextInt(2) + 3, fila, columna, numero, rand.nextInt(2) + 1);
+                    s = new Espadachines("Espadachin" + i + "X" + numero, fila, columna, numero);
                     break;
                 case 1:
-                    s = new Arquero("Arquero" + i + "X" + numero,
-                            rand.nextInt(3) + 1, fila, columna, numero, rand.nextInt(5) + 5);
+                    s = new Arquero("Arquero" + i + "X" + numero, fila, columna, numero);
                     break;
                 case 2:
-                    s = new Caballeros("Caballero" + i + "X" + numero, rand.nextInt(3) + 3, fila, columna, numero, true);
+                    s = new Caballeros("Caballero" + i + "X" + numero, fila, columna, numero);
                     break;
                 default:
-                    s = new Lancero("Lancero" + i + "X" + numero, rand.nextInt(2) + 1, fila, columna, numero, rand.nextInt(3) + 2);
+                    s = new Lancero("Lancero" + i + "X" + numero, fila, columna, numero);
                     break;
             }
 
@@ -145,5 +152,33 @@ public class Ejercito {
 
     public int getNumero() {
         return numero;
+    }
+
+    //LAB 09
+    public void mostrarResumen() {
+        int cab = 0, arq = 0, esp = 0, lan = 0;
+        for (Soldado s : soldados) {
+            if (s instanceof Caballeros) cab++;
+            else if (s instanceof Arquero) arq++;
+            else if (s instanceof Espadachines) esp++;
+            else if (s instanceof Lancero) lan++;
+        }
+        System.out.println("Resumen del Ejército " + numero + " (" + reino + ")");
+        System.out.println("Total de soldados: " + soldados.size());
+        System.out.println("Espadachines: " + esp);
+        System.out.println("Arqueros: " + arq);
+        System.out.println("Caballeros: " + cab);
+        System.out.println("Lanceros: " + lan);
+        System.out.println();
+    }
+
+    public String getReino() {
+        return reino;
+    }
+
+    public void aplicarBonus() {
+        for (Soldado s : soldados) {
+            s.setVidaActual(s.getVidaActual() + 1);
+        }
     }
 }

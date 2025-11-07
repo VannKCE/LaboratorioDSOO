@@ -1,9 +1,11 @@
+import java.util.Random;
+
 public class Espadachines extends Soldado {
     private int longitudEspada;
 
-    public Espadachines(String nombre, int puntosVida, int fila, int columna, int ejercito, int longitudEspada) {
-        super(nombre, puntosVida, fila, columna, ejercito);
-        this.longitudEspada = longitudEspada;
+    public Espadachines(String nombre, int fila, int columna, int ejercito) {
+        super(nombre, fila, columna, ejercito, 10, 8, new Random().nextInt(3) + 8); 
+        this.longitudEspada = new Random().nextInt(3) + 1;
     }
 
     public void crearMuroEscudos() {

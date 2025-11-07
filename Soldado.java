@@ -64,6 +64,18 @@ public class Soldado {
         this.vive = true;
     }
 
+    public Soldado(String nombre, int fila, int columna, int ejercito, int ataque, int defensa, int puntosVida) {
+        this.nombre = nombre;
+        this.fila = fila;
+        this.columna = columna;
+        this.ejercito = ejercito;
+        this.nivelAtaque = ataque;
+        this.nivelDefensa = defensa;
+        this.puntosVida = puntosVida;
+        this.vidaActual = puntosVida;
+        this.vive = true;
+    }
+
     public Soldado(int puntosVida, int fila, int columna, int ejercito, int nivelAtaque, int nivelVida, int vidaActual, int nivelDefensa, int velocidad, String actitud, boolean vive) {
         this.puntosVida = puntosVida;
         this.fila = fila;
