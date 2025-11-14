@@ -163,7 +163,7 @@ public class Ejercito {
             else if (s instanceof Espadachines) esp++;
             else if (s instanceof Lancero) lan++;
         }
-        System.out.println("Resumen del Ejército " + numero + " (" + reino + ")");
+        System.out.println("Ejército " + numero + ": " + reino);
         System.out.println("Total de soldados: " + soldados.size());
         System.out.println("Espadachines: " + esp);
         System.out.println("Arqueros: " + arq);
@@ -181,4 +181,6 @@ public class Ejercito {
             s.setVidaActual(s.getVidaActual() + 1);
         }
     }
+
+
 }
