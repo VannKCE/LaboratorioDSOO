@@ -1,0 +1,39 @@
+RESUMEN
+EJÉRCITO 1: Sacro Imperio Romano-Germánico
+Lancero0X1 | PV: 8 | Vida actual: 8 | Posición: (7,2) | Ejército: 1 | Tipo: Lancero | Longitud lanza: 2
+Arquero1X1 | PV: 5 | Vida actual: 5 | Posición: (6,2) | Ejército: 1 | Tipo: Arquero | Flechas: 3
+Lancero2X1 | PV: 5 | Vida actual: 5 | Posición: (5,5) | Ejército: 1 | Tipo: Lancero | Longitud lanza: 2
+Lancero3X1 | PV: 8 | Vida actual: 8 | Posición: (6,6) | Ejército: 1 | Tipo: Lancero | Longitud lanza: 1
+Lancero4X1 | PV: 8 | Vida actual: 8 | Posición: (10,8) | Ejército: 1 | Tipo: Lancero | Longitud lanza: 1
+Arquero5X1 | PV: 3 | Vida actual: 3 | Posición: (3,2) | Ejército: 1 | Tipo: Arquero | Flechas: 1
+Total de soldados: 6
+Espadachines: 0
+Arqueros: 2
+Caballeros: 0
+Lanceros: 4
+EJÉRCITO 2: Inglaterra
+Arquero0X2 | PV: 5 | Vida actual: 5 | Posición: (10,10) | Ejército: 2 | Tipo: Arquero | Flechas: 3
+Lancero1X2 | PV: 8 | Vida actual: 8 | Posición: (4,3) | Ejército: 2 | Tipo: Lancero | Longitud lanza: 1
+Caballero2X2 | PV: 12 | Vida actual: 12 | Posición: (7,9) | Ejército: 2 | Tipo: Caballero | Arma: espada | Montando: false
+Caballero3X2 | PV: 10 | Vida actual: 10 | Posición: (2,10) | Ejército: 2 | Tipo: Caballero | Arma: espada | Montando: false
+Lancero4X2 | PV: 8 | Vida actual: 8 | Posición: (2,8) | Ejército: 2 | Tipo: Lancero | Longitud lanza: 1
+Espadachin5X2 | PV: 8 | Vida actual: 8 | Posición: (2,1) | Ejército: 2 | Tipo: Espadachin | Longitud espada: 3
+Lancero6X2 | PV: 6 | Vida actual: 6 | Posición: (4,6) | Ejército: 2 | Tipo: Lancero | Longitud lanza: 3
+Total de soldados: 7
+Espadachines: 1
+Arqueros: 1
+Caballeros: 2
+Lanceros: 3
+MÉTRICA DE BATALLA
+Ejército 1: Sacro Imperio Romano-Germánico -> 39.36% de victoria.
+Ejército 2:Inglaterra -> 60.64% de victoria.
+Número aleatorio generado: 79.22
+GANADOR 
+Ejército 2 - Inglaterra. 
+Ya que al generar los porcentajes de probabilidad de victoria basada en los niveles de vida de sus soldados y aplicando un experimento aleatorio salió vencedor.
+Turno del ejército 1
+Soldado seleccionado en (10,8)
+Turno del ejército 2
+Soldado seleccionado en (10,10)
+Turno del ejército 1
+

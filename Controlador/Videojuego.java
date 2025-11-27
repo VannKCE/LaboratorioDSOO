@@ -1,9 +1,7 @@
 package Controlador;
 
 import Modelo.*;
-import ViewMain.MovimientoListener;
-import ViewMain.viewMain;
-
+import ViewMain.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -110,17 +108,66 @@ public class Videojuego {
         }
     }
 
+
     private static void verificarGanador(Mapa mapa, viewMain ventana) {
         boolean e1Vivo = mapa.getEjercito1().getSoldados().stream().anyMatch(Soldado::estaVivo);
         boolean e2Vivo = mapa.getEjercito2().getSoldados().stream().anyMatch(Soldado::estaVivo);
 
+        if (e1Vivo && e2Vivo) return;
+
+        String ganadorEj;
+        String perdedorEj;
+        String ganadorReino;
+        String perdedorReino;
+
         if (!e1Vivo) {
-            ventana.escribirConsola("¡Gana el Ejército 2!");
-            JOptionPane.showMessageDialog(ventana, "¡Gana el Ejército 2!");
-        } else if (!e2Vivo) {
-            ventana.escribirConsola("¡Gana el Ejército 1!");
-            JOptionPane.showMessageDialog(ventana, "¡Gana el Ejército 1!");
+            ganadorEj = "Ejército 2";
+            perdedorEj = "Ejército 1";
+            ganadorReino = mapa.getEjercito2().getReino();
+            perdedorReino = mapa.getEjercito1().getReino();
+        } else {
+            ganadorEj = "Ejército 1";
+            perdedorEj = "Ejército 2";
+            ganadorReino = mapa.getEjercito1().getReino();
+            perdedorReino = mapa.getEjercito2().getReino();
         }
+
+        ventana.escribirConsola(ganadorEj + ": " + ganadorReino + " ha ganado la batalla!");
+
+        JOptionPane.showMessageDialog(
+                ventana,
+                "¡" + ganadorEj + " ha ganado!\nReino: " + ganadorReino,
+                "Partida terminada",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        int soldadosVivosGanador = ganadorEj.equals("Ejército 1")
+                ? mapa.getEjercito1().contarVivos()
+                : mapa.getEjercito2().contarVivos();
+
+        String ranking =
+                "RESULTADO DE PARTIDA\n" +
+                "Ganador : " + ganadorEj + " (" + ganadorReino + ")\n" +
+                "Perdedor: " + perdedorEj + " (" + perdedorReino + ")\n" +
+                "Soldados vivos del ganador: " + soldadosVivosGanador + "\n";
+        ventana.setRanking(ranking);
+    }
+
+    public static void nuevoJuego(viewMain ventana) {
+        Mapa mapa = new Mapa();
+        Ejercito e1 = mapa.getEjercito1();
+        Ejercito e2 = mapa.getEjercito2();
+
+        ventana.limpiarTablero();
+        ventana.escribirConsola("RESUMEN");
+        e1.mostrarResumenConsola(ventana);
+        e2.mostrarResumenConsola(ventana);
+
+        for (Soldado s : e1.getSoldados())
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, true));
+
+        for (Soldado s : e2.getSoldados())
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, false));
     }
 
 }

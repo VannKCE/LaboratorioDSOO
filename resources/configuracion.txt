@@ -1,0 +1,5 @@
+Configuración del juego
+Territorio: desierto
+Ejército 1: Castilla-Aragón
+Ejército 2: Inglaterra
+Tablero: 10x10

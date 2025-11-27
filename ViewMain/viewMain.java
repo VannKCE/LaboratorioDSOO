@@ -2,6 +2,9 @@ package ViewMain;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class viewMain extends JFrame {
 
@@ -16,6 +19,13 @@ public class viewMain extends JFrame {
     public void setMovimientoListener(MovimientoListener l) {
         this.listenerMovimiento = l;
     }
+
+    private String ultimaPartidaRanking = "";
+
+    public void setRanking(String texto) { 
+        ultimaPartidaRanking = texto; 
+    }
+
 
     public viewMain(String reino1, String reino2, String territorio) {
         setTitle("Videojuego");
@@ -81,12 +91,39 @@ public class viewMain extends JFrame {
         JMenu menuArchivo = new JMenu("Archivo");
         JMenuItem itemNuevo = new JMenuItem("Nuevo");
         JMenuItem itemAbrir = new JMenuItem("Abrir");
+        JMenuItem itemAbrirLogs = new JMenuItem("Abrir Logs"); 
+        JMenuItem itemAbrirConfiguracion = new JMenuItem("Abrir Configuración");
+        JMenuItem itemAbrirRanking = new JMenuItem("Abrir Ranking");
         JMenuItem itemGuardar = new JMenuItem("Guardar");
+        JMenuItem itemGuardarLogs = new JMenuItem("Guardar Logs");
+        JMenuItem itemGuardarRanking = new JMenuItem("Guardar Ranking");
+        JMenuItem itemGuardarConfiguracion = new JMenuItem("Guardar Configuracion");
         JMenuItem itemSalir = new JMenuItem("Salir");
         menuArchivo.add(itemNuevo);
         menuArchivo.add(itemAbrir);
+        menuArchivo.add(itemAbrirLogs);
+        menuArchivo.add(itemAbrirConfiguracion);
+        menuArchivo.add(itemAbrirRanking);
         menuArchivo.add(itemGuardar);
+        menuArchivo.add(itemGuardarLogs);
+        menuArchivo.add(itemGuardarRanking);
+        menuArchivo.add(itemGuardarConfiguracion);
         menuArchivo.add(itemSalir);
+
+        itemNuevo.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Desea iniciar un nuevo juego?",
+                "Nuevo Juego",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                reiniciarJuego();
+                Controlador.Videojuego.nuevoJuego(this);
+            }
+        });
 
         itemSalir.addActionListener(e -> {
             int opcion = JOptionPane.showConfirmDialog(this,
@@ -98,6 +135,82 @@ public class viewMain extends JFrame {
                 System.exit(0);
         });
 
+        itemGuardarLogs.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Desea guardar los logs?",
+                    "Confirmar guardado",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                try (FileWriter fw = new FileWriter("resources/logs.txt", true);
+                    PrintWriter pw = new PrintWriter(fw)) {
+                    pw.println(consola.getText());
+                    JOptionPane.showMessageDialog(this, "Logs guardados correctamente.");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al guardar los logs.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        itemGuardarConfiguracion.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Desea guardar la configuración?",
+                    "Confirmar guardado",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                String config =
+                        "Configuración del juego\n"  +
+                        "Territorio: " + territorio + "\n" +
+                        "Ejército 1: " + reino1 + "\n" +
+                        "Ejército 2: " + reino2 + "\n" +
+                        "Tablero: 10x10\n";
+
+                System.out.println("CONFIG →\n" + config); // depuración
+                guardarArchivo("resources/configuracion.txt", config);
+            }
+        });
+
+        itemGuardarRanking.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Desea guardar la configuración?",
+                    "Confirmar guardado",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                guardarArchivo("resources/ranking.txt", ultimaPartidaRanking);
+            }
+        });
+
+        itemAbrirLogs.addActionListener(e -> {
+            File f = new File("resources/logs.txt");
+            if (f.exists()) {
+                new ViewLogs("resources/logs.txt");
+            } else {
+                JOptionPane.showMessageDialog(this, "No existen logs todavía.");
+            }
+        });
+
+
+        itemAbrirConfiguracion.addActionListener(e -> {
+            new ViewLogs("resources/configuracion.txt");
+        });
+
+        itemAbrirRanking.addActionListener(e -> {
+            new ViewLogs("resources/ranking.txt");
+        });
+
+
         JMenu menuVer = new JMenu("Ver");
         JMenuItem itemConsola = new JMenuItem("Mostrar/Ocultar consola");
         menuVer.add(itemConsola);
@@ -106,6 +219,12 @@ public class viewMain extends JFrame {
 
         JMenu menuAyuda = new JMenu("Ayuda");
         JMenuItem itemSobre = new JMenuItem("Sobre el juego");
+        itemSobre.addActionListener(e ->
+            JOptionPane.showMessageDialog(this,
+                "Este es un juego de batalla de ejercitos con diferentes tipos de soldados",
+                "Sobre el juego",
+                JOptionPane.INFORMATION_MESSAGE)
+        );
         menuAyuda.add(itemSobre);
 
         menuBar.add(menuArchivo);
@@ -160,6 +279,36 @@ public class viewMain extends JFrame {
         for (int i = 0; i < filas; i++)
             for (int j = 0; j < columnas; j++)
                 celdas[i][j].setImagen(null);
+    }
+
+    public void guardarArchivo(String ruta, String contenido) {
+        try {
+            FileWriter fw = new FileWriter(ruta);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.print(contenido);
+            pw.close();
+            fw.close();
+            JOptionPane.showMessageDialog(this,
+                    "Archivo guardado en:\n" + ruta,
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pudo guardar el archivo:\n" + ruta,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void reiniciarJuego() {
+        consola.setText("");
+        limpiarTablero();
+
+        try (PrintWriter pw = new PrintWriter("resources/logs.txt")) {
+            pw.print(""); 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        escribirConsola("Nuevo juego.");
     }
 
 }

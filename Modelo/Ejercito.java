@@ -205,5 +205,11 @@ public class Ejercito {
         ventana.escribirConsola("Lanceros: " + lan);
     }
 
+    public int contarVivos() {
+        int c = 0;
+        for (Soldado s : soldados)
+            if (s.estaVivo()) c++;
+        return c;
+    }
 
 }
