@@ -7,6 +7,16 @@ public class CeldaPanel extends JPanel {
 
     private Image imagen;
     private Color fondo = Color.WHITE;
+    private String nombreImagen;
+    
+    public void setImagenConNombre(String nombre, Image img) {
+        this.nombreImagen = nombre;
+        this.imagen = img;
+        repaint();
+    }
+    public String getNombreImagen() { 
+        return nombreImagen; 
+    }
 
     public void setImagen(Image imagen) {
         this.imagen = imagen;
@@ -14,7 +24,7 @@ public class CeldaPanel extends JPanel {
     }
 
     public Image getImagen() {
-        return imagen;
+        return this.imagen;
     }
 
     public void setColorFondo(Color c) {
@@ -36,4 +46,5 @@ public class CeldaPanel extends JPanel {
         g.setColor(Color.BLACK);
         g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
     }
+
 }

@@ -1,9 +1,14 @@
 package ViewMain;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 public class viewMain extends JFrame {
@@ -127,21 +132,21 @@ public class viewMain extends JFrame {
 
         itemSalir.addActionListener(e -> {
             int opcion = JOptionPane.showConfirmDialog(this,
-                    "¿Está seguro que desea salir?",
-                    "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
+                "¿Está seguro que desea salir?",
+                "Confirmar salida",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
             if (opcion == JOptionPane.YES_OPTION)
                 System.exit(0);
         });
 
         itemGuardarLogs.addActionListener(e -> {
             int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Desea guardar los logs?",
-                    "Confirmar guardado",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE
+                this,
+                "¿Desea guardar los logs?",
+                "Confirmar guardado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
             );
 
             if (opcion == JOptionPane.YES_OPTION) {
@@ -158,33 +163,33 @@ public class viewMain extends JFrame {
 
         itemGuardarConfiguracion.addActionListener(e -> {
             int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Desea guardar la configuración?",
-                    "Confirmar guardado",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE
+                this,
+                "¿Desea guardar la configuración?",
+                "Confirmar guardado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
             );
 
             if (opcion == JOptionPane.YES_OPTION) {
                 String config =
-                        "Configuración del juego\n"  +
-                        "Territorio: " + territorio + "\n" +
-                        "Ejército 1: " + reino1 + "\n" +
-                        "Ejército 2: " + reino2 + "\n" +
-                        "Tablero: 10x10\n";
+                    "Configuración del juego\n"  +
+                    "Territorio: " + territorio + "\n" +
+                    "Ejército 1: " + reino1 + "\n" +
+                    "Ejército 2: " + reino2 + "\n" +
+                    "Tablero: 10x10\n";
 
-                System.out.println("CONFIG →\n" + config); // depuración
+                System.out.println("CONFIG →\n" + config); 
                 guardarArchivo("resources/configuracion.txt", config);
             }
         });
 
         itemGuardarRanking.addActionListener(e -> {
             int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Desea guardar la configuración?",
-                    "Confirmar guardado",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE
+                this,
+                "¿Desea guardar la configuración?",
+                "Confirmar guardado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
             );
 
             if (opcion == JOptionPane.YES_OPTION) {
@@ -210,6 +215,76 @@ public class viewMain extends JFrame {
             new ViewLogs("resources/ranking.txt");
         });
 
+        //LABORATORIO 13 - GUARDAR
+        itemGuardar.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Desea guardar el archivo?",
+                "Confirmar guardado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                try {
+                    String[][] estado = new String[filas][columnas];
+
+                    for (int i = 0; i < filas; i++) {
+                        for (int j = 0; j < columnas; j++) {
+                            String nombre = celdas[i][j].getNombreImagen();
+                            estado[i][j] = (nombre == null) ? "" : nombre;
+                        }
+                    }
+
+                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("partida.dat"));
+                    oos.writeObject(estado);
+                    oos.close();
+
+                    JOptionPane.showMessageDialog(this, "Juego guardado correctamente.");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al guardar el juego.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        //LABORATORIO 13 - ABRIR 
+        itemAbrir.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Desea abrir la partida?",
+                "Abrir",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("partida.dat"));
+                    String[][] estado = (String[][]) ois.readObject();
+                    ois.close();
+
+                    limpiarTablero();
+
+                    for (int i = 0; i < filas; i++) {
+                        for (int j = 0; j < columnas; j++) {
+                            if (!estado[i][j].isEmpty()) {
+
+                                String nombre = estado[i][j];
+                                Image img = new ImageIcon(nombre).getImage();
+
+                                celdas[i][j].setImagenConNombre(nombre, img);
+                            }
+                        }
+                    }
+
+                    escribirConsola("Partida abierta correctamente.");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al abrir la partida.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
         JMenu menuVer = new JMenu("Ver");
         JMenuItem itemConsola = new JMenuItem("Mostrar/Ocultar consola");
@@ -269,9 +344,12 @@ public class viewMain extends JFrame {
         consola.append(texto + "\n");
     }
 
-    public void colocarSoldado(int fila, int columna, Image imagen) {
+    public void colocarSoldado(int fila, int columna, String nombreImagen) {
         if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
-            celdas[fila][columna].setImagen(imagen);
+
+            Image img = new ImageIcon(nombreImagen).getImage();
+
+            celdas[fila][columna].setImagenConNombre(nombreImagen, img);
         }
     }
 

@@ -13,7 +13,7 @@ public class ViewLogs extends JFrame {
 
     public ViewLogs(String filetxt) {
 
-        setTitle("Visualizador de Logs");
+        setTitle("Visualizador ");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);

@@ -5,7 +5,9 @@ import ViewMain.viewMain;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Ejercito {
+import java.io.*;
+
+public class Ejercito implements Serializable {
     private ArrayList<Soldado> soldados; 
     private int numero; 
     //LAB 09
@@ -135,7 +137,7 @@ public class Ejercito {
         int total1 = this.puntosTotales();
         int total2 = otro.puntosTotales();
 
-        System.out.println("Comparando Ejércitos...");
+        System.out.println("Total de vida por Ejército");
         System.out.println("Ejército 1 total vida: " + total1);
         System.out.println("Ejército 2 total vida: " + total2);
 

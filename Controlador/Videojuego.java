@@ -3,14 +3,8 @@ package Controlador;
 import Modelo.*;
 import ViewMain.*;
 import javax.swing.*;
-import java.awt.*;
 
 public class Videojuego {
-    private static Image cargarImagen(String archivo) {
-        ImageIcon icon = new ImageIcon(archivo);
-        return icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-    }
-
     private static Soldado soldadoSeleccionado = null;
     private static int turnoEjercito = 1;
 
@@ -27,10 +21,11 @@ public class Videojuego {
 
         // COLOCAR SOLDADOS EN EL TABLERO 
         for (Soldado s : e1.getSoldados())
-            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, true));
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, true));
 
         for (Soldado s : e2.getSoldados())
-            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, false));
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, false));
+        
 
         Batalla batalla = new Batalla(mapa.getTablero());
 
@@ -84,25 +79,25 @@ public class Videojuego {
 
         for (Soldado s : mapa.getEjercito1().getSoldados())
             if (s.estaVivo())
-                ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, true));
+                ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, true));
 
         for (Soldado s : mapa.getEjercito2().getSoldados())
             if (s.estaVivo())
-                ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, false));
+                ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, false));
     }
 
-    private static Image obtenerImagen(Soldado s, boolean azul) {
+    private static String obtenerNombreImagen(Soldado s, boolean azul) {
         String color = azul ? "azul" : "rojo";
 
         switch (s.getClass().getSimpleName()) {
             case "Espadachines":
-                return cargarImagen("e_" + color + ".png");
+                return "e_" + color + ".png";
             case "Arquero":
-                return cargarImagen("a_" + color + ".png");
+                return "a_" + color + ".png";
             case "Caballeros":
-                return cargarImagen("c_" + color + ".png");
+                return "c_" + color + ".png";
             case "Lancero":
-                return cargarImagen("l_" + color + ".png");
+                return "l_" + color + ".png";
             default:
                 return null;
         }
@@ -164,10 +159,10 @@ public class Videojuego {
         e2.mostrarResumenConsola(ventana);
 
         for (Soldado s : e1.getSoldados())
-            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, true));
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, true));
 
         for (Soldado s : e2.getSoldados())
-            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerImagen(s, false));
+            ventana.colocarSoldado(s.getFila(), s.getColumna(), obtenerNombreImagen(s, false));
     }
 
 }
