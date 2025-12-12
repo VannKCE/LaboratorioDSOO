@@ -71,6 +71,7 @@ public class Videojuego {
 
         
         ventana.escribirConsola("Turno del ejército " + turnoEjercito);
+        
 
     }
 
@@ -146,6 +147,7 @@ public class Videojuego {
                 "Perdedor: " + perdedorEj + " (" + perdedorReino + ")\n" +
                 "Soldados vivos del ganador: " + soldadosVivosGanador + "\n";
         ventana.setRanking(ranking);
+        RankingDAO.guardarResultado(ganadorReino, perdedorReino, soldadosVivosGanador);
     }
 
     public static void nuevoJuego(viewMain ventana) {
